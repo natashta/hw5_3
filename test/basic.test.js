@@ -1,21 +1,73 @@
-import getNumber from '../src/js/app';
+import setUpAttacks from '../src/js/app';
 
-test('should return number', () => {
-  expect(getNumber('80')).toBe(80);
+test('attack without shield', () => {
+  const characters = [
+    { name: 'маг', health: 100 },
+    { name: 'лучник', health: 80 },
+    { name: 'мечник', health: 10 },
+  ];
+
+  const expected = [
+    { name: 'маг', health: 100 },
+    { name: 'лучник', health: 70 },
+    { name: 'мечник', health: 10 },
+  ];
+
+  const received = setUpAttacks(characters, false)[1](10);
+
+  expect(received).toEqual(expected);
 });
 
-test('input null should return error', () => {
-  expect(getNumber('0')).toEqual(Error('Ввод некорректен'));
+test('attack with shield', () => {
+  const characters = [
+    { name: 'маг', health: 100 },
+    { name: 'лучник', health: 80 },
+    { name: 'мечник', health: 10 },
+  ];
+
+  const expected = [
+    { name: 'маг', health: 97 },
+    { name: 'лучник', health: 77 },
+    { name: 'мечник', health: 7 },
+  ];
+
+  const received = setUpAttacks(characters, true)[1](9);
+
+  expect(received).toEqual(expected);
 });
 
-test('input negative should return error', () => {
-  expect(getNumber('-1')).toEqual(Error('Ввод некорректен'));
+test('attack without shield on zero health person', () => {
+  const characters = [
+    { name: 'маг', health: 100 },
+    { name: 'лучник', health: 80 },
+    { name: 'мечник', health: 0 },
+  ];
+
+  const expected = [
+    { name: 'маг', health: 100 },
+    { name: 'лучник', health: 80 },
+    { name: 'мечник', health: 0 },
+  ];
+
+  const received = setUpAttacks(characters, false)[2](10);
+
+  expect(received).toEqual(expected);
 });
 
-test('input string should return error', () => {
-  expect(getNumber('string')).toEqual(Error('Ввод некорректен'));
-});
+test('attack with shield on zero health person', () => {
+  const characters = [
+    { name: 'маг', health: 100 },
+    { name: 'лучник', health: 80 },
+    { name: 'мечник', health: 0 },
+  ];
 
-test('input non decimal should return error', () => {
-  expect(getNumber('0xFF')).toEqual(Error('Ввод некорректен'));
+  const expected = [
+    { name: 'маг', health: 96 },
+    { name: 'лучник', health: 75 },
+    { name: 'мечник', health: 0 },
+  ];
+
+  const received = setUpAttacks(characters, true)[1](9);
+
+  expect(received).toEqual(expected);
 });
