@@ -71,3 +71,21 @@ test('attack with shield on zero health person', () => {
 
   expect(received).toEqual(expected);
 });
+
+test('attack more then sum of persons health', () => {
+  const characters = [
+    { name: 'маг', health: 20 },
+    { name: 'лучник', health: 30 },
+    { name: 'мечник', health: 10 },
+  ];
+
+  const expected = [
+    { name: 'маг', health: 0 },
+    { name: 'лучник', health: 0 },
+    { name: 'мечник', health: 0 },
+  ];
+
+  const received = setUpAttacks(characters, true)[1](100);
+
+  expect(received).toEqual(expected);
+});

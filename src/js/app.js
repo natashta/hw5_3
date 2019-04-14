@@ -11,8 +11,8 @@ const setUpAttacks = (items, shield = true) => {
       }
 
       const healthHeroes = items.filter(hero => hero.health > 0).length;
-      const indDamage = Math.floor(damage / healthHeroes);
       const restDamage = damage % healthHeroes;
+      const indDamage = (damage - restDamage) / healthHeroes;
 
       items.forEach((element) => {
         if ((element.health > 0) && (element.health > indDamage)) {
