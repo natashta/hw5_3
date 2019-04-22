@@ -3,10 +3,11 @@ const setUpAttacks = (items, shield = true) => {
 
   items.forEach((item) => {
     const setDamage = (damage) => {
+      const i = item;
       if (!shield) {
-        if ((item.health > 0) && (item.health > damage)) {
-          item.health -= damage;
-        } else { item.health = 0; }
+        if ((i.health > 0) && (i.health > damage)) {
+          i.health -= damage;
+        } else { i.health = 0; }
         return items;
       }
 
@@ -15,15 +16,16 @@ const setUpAttacks = (items, shield = true) => {
       const indDamage = (damage - restDamage) / healthHeroes;
 
       items.forEach((element) => {
-        if ((element.health > 0) && (element.health > indDamage)) {
-          element.health -= indDamage;
-        } else { element.health = 0; }
+        const el = element;
+        if ((el.health > 0) && (el.health > indDamage)) {
+          el.health -= indDamage;
+        } else { el.health = 0; }
         return items;
       });
 
-      if ((item.health > 0) && (item.health > restDamage)) {
-        item.health -= restDamage;
-      } else { item.health = 0; }
+      if ((i.health > 0) && (i.health > restDamage)) {
+        i.health -= restDamage;
+      } else { i.health = 0; }
       return items;
     };
     result.push(setDamage);
